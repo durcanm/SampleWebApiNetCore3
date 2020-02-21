@@ -15,11 +15,32 @@ namespace Cars.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ModelDto>> GetModelByBrand(int brandId)
         {
-            var modelList = CarsDataStore.current.Brands
-                .Where(x=>x.Id==brandId)
-                .ToList();
+            var brand = CarsDataStore.current.Brands
+                .FirstOrDefault(x => x.Id == brandId);
 
-            return Ok(modelList);
+            if (brand == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(brand.Models);
+        }
+
+        [HttpGet("{modelId}")]
+        public ActionResult<ModelDto> GetModel(int brandId, int modelId)
+        {
+            var brand = CarsDataStore.current.Brands
+                .FirstOrDefault(x => x.Id == brandId);
+
+            if (brand == null)
+            {
+                return NotFound();
+            }
+
+            var model = brand.Models
+                .FirstOrDefault(x => x.Id == modelId);
+
+            return Ok(model);
         }
     }
 }
