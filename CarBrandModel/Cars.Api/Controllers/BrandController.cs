@@ -14,12 +14,7 @@ namespace Cars.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<BrandDto>> GetAllBrands()
         {
-            var brandList = new List<BrandDto>()
-            {
-                new BrandDto { Id = 1, Name = "Ford" },
-                new BrandDto { Id = 2, Name = "Subaru" },
-                new BrandDto { Id = 3, Name = "Opel" },
-            };
+            var brandList = CarsDataStore.current.Brands;
 
             return Ok(brandList);
         }

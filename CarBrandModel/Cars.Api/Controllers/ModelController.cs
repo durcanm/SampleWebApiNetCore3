@@ -1,6 +1,7 @@
 ﻿using Cars.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cars.Api.Controllers
 {
@@ -14,7 +15,11 @@ namespace Cars.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ModelDto>> GetModelByBrand(int brandId)
         {
-            return Ok("models...");
+            var modelList = CarsDataStore.current.Brands
+                .Where(x=>x.Id==brandId)
+                .ToList();
+
+            return Ok(modelList);
         }
     }
 }
